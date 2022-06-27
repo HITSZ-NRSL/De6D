@@ -6,6 +6,7 @@ data/
 *.pyc
 venv/
 *.idea/
+*.cmake-build-debug/
 *.so
 *.yaml
 *.sh
@@ -15,3 +16,5 @@ venv/
 *.bin
 output
 version.py
+*.bag
+*.backup
