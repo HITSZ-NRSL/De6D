@@ -2,7 +2,7 @@
 
 [Junyuan Ouyang](https://github.com/OuyangJunyuan), [Haoyao Chen](https://github.com/HitszChen)
 
-[**[project page]**](https://ouyangjunyuan.github.io/Det6D/) [**[arXiv]**](https://arxiv.org/abs/2207.09412) [**[video]**](https://youtu.be/VOQU78gdF9k)
+[**[project page]**](https://hitsz-nrsl.github.io/De6D/) [**[arXiv]**](https://arxiv.org/abs/2207.09412) [**[video]**](https://youtu.be/VOQU78gdF9k)
 
 This repo is the official code release of ***Det6D***, the first full-degree-of-freedom 3D detector.
 
