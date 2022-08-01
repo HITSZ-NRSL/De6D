@@ -18,7 +18,7 @@ Networked RObotics and Systems Lab
 </p>
 
 <p>
-<center><a href="">[Paper]</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<center><a href="https://arxiv.org/abs/2207.09412">[arXiv]</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href="https://github.com/OuyangJunyuan/Det6D">[Code]</a></center>
 </p>
 
@@ -45,17 +45,9 @@ results of <span style="color: black; ">previous</span> and <span style="color: 
 
 ## Abstract
 
-Accurate 3D object detection with LiDAR is critical for autonomous driving. Existing research is based on the flat-world
-assumption. However, the actual road can be complex with a partial slope. Current methods suffer from performance
-degradation in this case due to difficulty in detecting objects on steep slopes correctly. In this work, we propose a
-novel full-space full-pose detector called Det6D to improve terrain robustness. We choose the point-based framework by
-founding that it can detect objects in the entire spatial range. To predict the full poses, including pitch and roll, we
-design a ground-aware orientation head that leverages the local ground constraints. Given the difficulty of long-tail
-non-flat scene data collection and 6D pose annotation, we present Slope-Aug, a data augmentation method for synthesizing
-sloped terrain from existing datasets recorded in flat scenes. Experiments on various datasets demonstrate the accuracy
-and robustness of our method in different terrains. We also conducted an extended experiment to show how the network
-predicts the two extra poses. Our framework is efficient and effective, achieving 25ms inference time for the
-lightweight version.<br>
+Accurate 3D object detection with LiDAR is critical for autonomous driving. Existing research is all based on the flat-world assumption. However, the actual road can be complex with steep sections, which breaks the premise. Current methods suffer from performance degradation in this case due to difficulty correctly detecting objects on sloped terrain. 
+
+This work presents the first full-degree-of-freedom 3D object detector, ***Det6D***, without spatial and postural limitations to improve terrain robustness. We choose the point-based framework because of its flexible detection range. A ground-aware orientation branch leveraging the local ground constraints is designed to predict full-degree poses, i.e., including pitch and roll. Given the difficulty of long-tail non-flat scene data collection and 6D pose annotation, we present SlopeAug, a data augmentation method for synthesizing non-flat terrain from existing datasets recorded in flat scenes. Experiments on various datasets demonstrate the effectiveness and robustness of our method on different terrains. The proposed modules are plug-and-play for existing point-based frameworks.<br>
 
 <br>
 
