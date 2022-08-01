@@ -8,7 +8,7 @@ This repo is the official code release of ***Det6D***, the first full-degree-of-
 
 ## News:
 
-* [2022/08/01]: Det6D is now on [arXiv](https://arxiv.org/abs/2207.09412), and the code will be released after accepted. 
+* [2022/08/01]: Det6D is now on [arXiv](https://arxiv.org/abs/2207.09412), and code will be released after the paper is accepted. 
 * [2022/06/28]: Add project page.
 
 ## Introduction
