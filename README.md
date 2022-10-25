@@ -7,7 +7,7 @@
 This repo is the official code release of ***Det6D***, the first full-degree-of-freedom 3D detector.
 
 ## News:
-
+* [2022/10/26]: :boom: Det6D accepted by IEEE Transactions on Instrumentation and Measurement.
 * [2022/08/01]: Det6D is now on [arXiv](https://arxiv.org/abs/2207.09412), and code will be released after the paper is accepted. 
 * [2022/06/28]: Add project page.
 
@@ -47,3 +47,22 @@ GTA-V
 
 | results<img src="docs/img/gtav_points.gif" width="380"/> | scene<img src="docs/img/gtav_imgs.gif" width="380"/> |
 | :------------------------------------------------------: | :--------------------------------------------------: |
+
+
+## Acknowledgement
+
+We thank the authors of [`OpenPCDet`](https://github.com/open-mmlab/OpenPCDet) for their open source release. Parts of our code base on the recent work [SASA](https://github.com/blakechen97/SASA).
+
+
+
+## Citation
+
+If you find this project useful in your research, please consider citing:
+```bib
+@article{ouyang2022det6d,
+  title={Det6D: A Ground-Aware Full-Pose 3D Object Detector for Improving Terrain Robustness},
+  author={Ouyang, Junyuan and Chen, Haoyao},
+  journal={arXiv preprint arXiv:2207.09412},
+  year={2022}
+}
+```
