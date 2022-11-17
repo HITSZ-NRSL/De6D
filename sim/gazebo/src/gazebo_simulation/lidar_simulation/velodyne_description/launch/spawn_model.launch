@@ -1,0 +1,16 @@
+<launch>
+    <arg name="group_ns" default="Ruby80"/>
+    <arg name="robotname" default="Ruby80"/>
+    <arg name="x" default="0"/>
+    <arg name="y" default="0"/>
+    <arg name="z" default="0"/>
+    <group ns="$(arg group_ns)">
+        <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find velodyne_description)/urdf/det6d_car.urdf.xacro'
+                                                       robot_namespace:=$(arg group_ns) "/>
+        <node pkg="gazebo_ros" type="spawn_model" name="spawn_model" args="-urdf -param /$(arg group_ns)/robot_description
+                                                                -model $(arg group_ns)_$(arg robotname) -x $(arg x) -y $(arg y) -z $(arg z)"/>
+        <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+            <param name="tf_prefix" value="$(arg group_ns)"/>
+        </node>
+    </group>
+</launch>

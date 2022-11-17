@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robot">
+
+    <xacro:include filename="$(find velodyne_description)/urdf/Customized.urdf.xacro"/>
+    <xacro:include filename="$(find velodyne_description)/urdf/RS-Ruby80.urdf.xacro"/>
+    <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
+    <xacro:include filename="$(find velodyne_description)/urdf/HDL-32E.urdf.xacro"/>
+    <!--                          User configuartion                                          -->
+    <xacro:HDL-32E
+            name="hdl32e"
+            topic="hdl32e"
+            lasers="64"
+            gpu="true"
+            parent="link">
+        <origin xyz="0 0 1.72" rpy="0 0 -1.5707"/>
+    </xacro:HDL-32E>
+    <!--                        User configuartion                                          -->
+
+    <link name="link">
+        <collision name="collision">
+            <pose>0 0 0 0 0 1.57079632679</pose>
+            <geometry>
+                <mesh filename="model://hatchback/meshes/hatchback.obj" scale="0.0254 0.0254 0.0254">
+                    <scale>0.0254</scale>
+                </mesh>
+            </geometry>
+        </collision>
+        <visual name="visual">
+            <pose>0 0 0 0 0 1.57079632679</pose>
+            <geometry>
+                <mesh filename="model://hatchback/meshes/hatchback.obj" scale="0.0254 0.0254 0.0254"/>
+            </geometry>
+        </visual>
+    </link>
+
+
+</robot>

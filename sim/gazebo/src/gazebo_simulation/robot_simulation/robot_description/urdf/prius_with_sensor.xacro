@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="prius">
+    <xacro:include filename="$(find robot_description)/urdf/prius.xacro"/>
+    <xacro:CREATE_PRIUS control_topic="$(arg control_topic)"/>
+    <xacro:if value="$(arg sensor)">
+        <xacro:include filename="$(find velodyne_description)/urdf/HDL-32E.urdf.xacro"/>
+        <xacro:include filename="$(find robot_description)/urdf/CameraSensor.xacro"/>
+        <xacro:HDL-32E
+                name="hdl_32e"
+                topic="hdl_32e"
+                lasers="64"
+                noise="0.03"
+                gpu="true"
+                parent="actor_base_link">
+            <origin xyz="1.5 0 1.72" rpy="0 0 0"/>
+        </xacro:HDL-32E>
+
+        <xacro:Macro_CameraROS name="camera" parent="actor_base_link" frame="camera"
+                               fov="1.3962634" width="640" height="480">
+            <origin xyz="1.5 0 1.6" rpy="0 0 0"/>
+        </xacro:Macro_CameraROS>
+    </xacro:if>
+</robot>

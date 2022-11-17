@@ -7,6 +7,7 @@
 This repo is the official code release of ***Det6D***, the first full-degree-of-freedom 3D detector.
 
 ## News:
+* [2022/11/17]: release source codes.
 * [2022/10/26]: :boom: Det6D accepted by IEEE Transactions on Instrumentation and Measurement.
 * [2022/08/01]: Det6D is now on [arXiv](https://arxiv.org/abs/2207.09412), and code will be released after the paper is accepted. 
 * [2022/06/28]: Add project page.

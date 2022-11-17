@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="LiDAR-80">
+  <xacro:property name="M_PI" value="3.1415926535897931" />
+
+  <xacro:macro name="LiDARSensorGen" params="
+  name      suffix
+
+  visualize:=false      gpu:=false      hz:=10
+  samples:=1800      lasers:=16      noise:=0.008
+  min_range:=0.3      max_range:=130.0
+  min_angle:=-${M_PI}      max_angle:=${M_PI}
+  v_min_angle:=-${M_PI/12}         v_max_angle:=${15*M_PI/12}
+  ">
+
+    <xacro:if value="${gpu}">
+      <xacro:property name="type" value="gpu_ray"/>
+    </xacro:if>
+    <xacro:unless value="${gpu}">
+      <xacro:property name="type" value="ray"/>
+    </xacro:unless>
+
+    <sensor type="${type}" name="${name}-${suffix}">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>${visualize}</visualize>
+      <update_rate>${hz}</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>${samples}</samples>
+            <resolution>1</resolution>
+            <min_angle>${min_angle}</min_angle>
+            <max_angle>${max_angle}</max_angle>
+          </horizontal>
+          <vertical>
+            <samples>${lasers}</samples>
+            <resolution>1</resolution>
+            <min_angle>${v_min_angle}</min_angle>
+            <max_angle>${v_max_angle}</max_angle>
+          </vertical>
+        </scan>
+        <range>
+          <min>${min_range}</min>
+          <max>${max_range}</max>
+          <resolution>0.001</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>${noise}</stddev>
+        </noise>
+      </ray>
+    </sensor>
+  </xacro:macro>
+
+
+  <xacro:macro name="CustomLiDAR"  params="
+  name      parent      *origin
+
+  frame      topic      ns:=''
+
+  visualize:=false      gpu:=false      hz:=10
+  samples:=1800      noise:=0.008
+  min_range:=0.9    max_range:=130.0
+  ">
+    <joint name="${parent}_${frame}_fixed_joint"  type="revolute">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}" />
+      <child link="${frame}" />
+      <axis xyz="0 0 1"/>
+      <limit  lower="-1e-5" upper="1e-5" effort="1e-5" velocity="1e-5" />
+    </joint>
+    <link name="${frame}">
+      <inertial>
+        <mass value="1.0"/>
+        <origin xyz="0 0 0.07212"/>
+        <inertia ixx="${(1.0 * (3.0*0.04267*0.04267 + 0.14424*0.14424)) / 12.0}" ixy="0" ixz="0"
+                 iyy="${(1.0 * (3.0*0.04267*0.04267 + 0.14424*0.14424)) / 12.0}" iyz="0"
+                 izz="${0.5 * 1.0 * (0.04267*0.04267)}"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="package://velodyne_description/meshes/HDL32E_base.dae" />
+        </geometry>
+      </visual>
+    </link>
+    <joint name="${name}_base_scan_joint" type="fixed" >
+      <origin xyz="0 0 0.09081" rpy="0 0 0" />
+      <parent link="${frame}" />
+      <child link="${name}"/>
+    </joint>
+    <link name="${name}">
+      <inertial>
+        <mass value="0.01"/>
+        <origin xyz="0 0 0"/>
+        <inertia ixx="1e-7" ixy="0" ixz="0" iyy="1e-7" iyz="0" izz="1e-7"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 -0.09081" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://velodyne_description/meshes/HDL32E_scan.dae" />
+        </geometry>
+      </visual>
+    </link>
+
+
+
+    <xacro:if value="${gpu}">
+      <xacro:property name="lib" value="gazebo_ros_custom_gpu_lidar"/>
+    </xacro:if>
+    <xacro:unless value="${gpu}">
+      <xacro:property name="lib" value="gazebo_ros_custom_lidar"/>
+    </xacro:unless>
+
+    <!-- Custom LiDAR Config -->
+    <gazebo >
+      <plugin name="${lib}" filename="lib${lib}.so">
+        <topicName>${topic}</topicName>
+        <frameName>${frame}</frameName>
+        <namespace>${ns}</namespace>
+        <min_range>${min_range}</min_range>
+        <max_range>${max_range}</max_range>
+      </plugin>
+    </gazebo>
+
+    <gazebo reference="${frame}">
+      <xacro:LiDARSensorGen name="sensor-sector" suffix="1"
+                            visualize="${visualize}" hz="${hz}" gpu="${gpu}" noise="0.008"
+
+                            samples="${samples}" lasers="15     +1"
+                            v_max_angle="${15         *M_PI/180.0}"
+                            v_min_angle="${1.91       *M_PI/180.0}"/>
+
+      <xacro:LiDARSensorGen name="sensor-sector" suffix="2"
+                            visualize="${visualize}" hz="${hz}" gpu="${gpu}" noise="0.008"
+
+                            samples="${samples}" lasers="40     -2"
+                            v_max_angle="${1.01       *M_PI/180.0}"
+                            v_min_angle="${-2.99      *M_PI/180.0}"/>
+
+      <xacro:LiDARSensorGen name="sensor-sector" suffix="3"
+                            visualize="${visualize}" hz="${hz}" gpu="${gpu}" noise="0.008"
+
+                            samples="${samples}" lasers="25     +1"
+                            v_max_angle="${-3.89      *M_PI/180.0}"
+                            v_min_angle="${-25        *M_PI/180.0}"/>
+    </gazebo>
+    <!-- Custom LiDAR Config -->
+  </xacro:macro>
+</robot>

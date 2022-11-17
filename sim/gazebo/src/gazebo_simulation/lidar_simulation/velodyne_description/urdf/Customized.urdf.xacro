@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="Customized_LiDAR">
+    <xacro:property name="M_PI" value="3.1415926535897931"/>
+
+
+    <xacro:property name="horizontal_samples" value="0.2"/>
+    <xacro:property name="horizontal_max_angle" value="180.0"/>
+    <xacro:property name="horizontal_min_angle" value="-180.0"/>
+
+    <xacro:property name="vertical_min_sample" value="0.1"/>
+    <xacro:property name="vertical_max_angle" value="15.0"/>
+    <xacro:property name="vertical_min_angle" value="-25.5"/>
+
+    <xacro:property name="max_range" value="230"/> <!-- 230 -->
+    <xacro:property name="min_range" value="1"/>
+
+    <xacro:property name="noise" value="0.008"/>
+
+    <xacro:property name="lidar_mesh" value="package://velodyne_description/meshes/RS_Ruby80.STL"/>
+
+    <xacro:property name="vertical_distribution">
+        <sector0 begin="15" end="1" lines="15"/>
+        <sector1 begin="1" end="-3" lines="40"/>
+        <sector2 begin="-3" end="-25.5" lines="25"/>
+    </xacro:property>
+
+    <xacro:macro name="Customized_LiDAR" params="
+                                        *origin
+                                        parent:=base_link
+                                        ns:=/
+                                        name:=lidar
+                                        topic:=/points
+                                        resolution:=${horizontal_samples}
+                                        gpu:=false
+                                        hz:=10 ">
+        <joint name="${name}_${parent}_mount_joint" type="fixed">
+            <xacro:insert_block name="origin"/>
+            <parent link="${parent}"/>
+            <child link="${name}"/>
+        </joint>
+        <link name="${name}">
+            <inertial>
+                <mass value="0.01"/>
+                <origin xyz="0 0 0"/>
+                <inertia ixx="1e-7" ixy="0" ixz="0" iyy="1e-7" iyz="0" izz="1e-7"/>
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="${lidar_mesh}"/>
+                </geometry>
+            </visual>
+        </link>
+
+        <xacro:if value="${gpu}">
+            <xacro:property name="type" value="gpu_ray"/>
+        </xacro:if>
+        <xacro:unless value="${gpu}">
+            <xacro:property name="type" value="ray"/>
+        </xacro:unless>
+        <xacro:if value="${gpu}">
+            <xacro:property name="lib" value="gazebo_ros_customized_gpu_lidar"/>
+        </xacro:if>
+        <xacro:unless value="${gpu}">
+            <xacro:property name="lib" value="gazebo_ros_customized_lidar"/>
+        </xacro:unless>
+        <!-- Gazebo requires the customized_lidar_gazebo_plugins package -->
+        <gazebo reference="${name}">
+
+            <sensor type="${type}" name="${name}-sensor">
+                <pose>0 0 0 0 0 0</pose>
+                <visualize>false</visualize>
+                <update_rate>${hz}</update_rate>
+                <ray>
+                    <scan>
+                        <horizontal>
+                            <samples>${(horizontal_max_angle-horizontal_min_angle)/resolution}</samples>
+                            <resolution>1</resolution>
+                            <max_angle>${horizontal_max_angle *M_PI/180}</max_angle>
+                            <min_angle>${horizontal_min_angle *M_PI/180}</min_angle>
+                        </horizontal>
+                        <vertical>
+                            <samples>${(vertical_max_angle-vertical_min_angle)/vertical_min_sample}</samples>
+                            <resolution>1</resolution>
+                            <max_angle>${vertical_max_angle *M_PI/180.0}</max_angle>
+                            <min_angle>${vertical_min_angle *M_PI/180.0}</min_angle>
+                        </vertical>
+                    </scan>
+                    <range>
+                        <min>${min_range}</min>
+                        <max>${max_range}</max>
+                        <resolution>0.001</resolution>
+                    </range>
+                    <noise>
+                        <type>gaussian</type>
+                        <mean>${noise}</mean>
+                        <stddev>0.0</stddev>
+                    </noise>
+                </ray>
+
+                <plugin name="${name}_${type}_controller" filename="lib${lib}.so">
+                    <nameSpace>${ns}</nameSpace>
+                    <topicName>${topic}</topicName>
+                    <frameName>${name}</frameName>
+                    <minRange>${min_range}</minRange>
+                    <maxRange>${max_range}</maxRange>
+                    <vDistribution>
+                        <xacro:insert_block name="vertical_distribution"/>
+                    </vDistribution>
+                </plugin>
+            </sensor>
+        </gazebo>
+
+    </xacro:macro>
+
+</robot>

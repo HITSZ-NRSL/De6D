@@ -1,0 +1,20 @@
+<launch>
+    <arg name="model"/>
+    <arg name="group_ns" default="robot_sim"/>
+    <arg name="model_pose" default="-x 0 -y 0 -z 0"/>
+    <arg name="model_args" default=""/>
+
+    <group ns="$(arg group_ns)">
+        <param name="robot_description" command="$(find xacro)/xacro --inorder '$(arg model)' $(arg model_args)"/>
+
+        <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
+              args="-urdf -param /$(arg group_ns)/robot_description
+                    -model $(arg group_ns) $(arg model_pose) "
+              output="screen"/>
+
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+            <param name="tf_prefix" value="$(arg group_ns)"/>
+        </node>
+    </group>
+
+</launch>

@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robot">
+
+    <xacro:include filename="$(find velodyne_description)/urdf/Customized.urdf.xacro"/>
+    <xacro:include filename="$(find velodyne_description)/urdf/RS-Ruby80.urdf.xacro"/>
+    <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
+    <!--                          User configuartion                                          -->
+    <xacro:Customized_LiDAR
+            name="Ruby80"
+            topic="Ruby80"
+            gpu="true"
+            ns="$(arg robot_namespace)"
+            parent="top_link">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </xacro:Customized_LiDAR>
+
+    <xacro:VLP-16
+            name="vlp16"
+            topic="vlp16"
+            gpu="false"
+            parent="top_link">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </xacro:VLP-16>
+    <!--                        User configuartion                                          -->
+
+
+    <!--  &lt;!&ndash; Base Footprint &ndash;&gt;-->
+    <link name="base_footprint"/>
+    <!-- Base Link -->
+
+
+    <joint name="footprint" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="base_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+    <link name="base_link">
+        <inertial>
+            <origin
+                    xyz="0 0 0"
+                    rpy="0 0 0"/>
+            <mass
+                    value="200"/>
+            <inertia
+                    ixx="1e-10"
+                    ixy="1e-10"
+                    ixz="1e-10"
+                    iyy="1e-10"
+                    iyz="1e-10"
+                    izz="1e-10"/>
+        </inertial>
+        <visual>
+            <geometry>
+                <box size="0.1 0.1 0.01"/>
+            </geometry>
+
+        </visual>
+        <collision>
+            <origin
+                    xyz="0 0 0"
+                    rpy="0 0 0"/>
+            <geometry>
+                <box size="0.1 0.1 0.01"/>
+            </geometry>
+        </collision>
+    </link>
+
+
+    <joint name="mount_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="top_link"/>
+        <origin xyz="0 0 1" rpy="0 0 0"/>
+    </joint>
+    <link name="top_link">
+        <inertial>
+            <origin
+                    xyz="0 0 0.4"
+                    rpy="0 0 0"/>
+            <mass
+                    value="0.2"/>
+            <inertia
+                    ixx="1e-10"
+                    ixy="1e-10"
+                    ixz="1e-10"
+                    iyy="1e-10"
+                    iyz="1e-10"
+                    izz="1e-10"/>
+        </inertial>
+        <visual>
+            <geometry>
+                <box size="0.1 0.1 0.01"/>
+            </geometry>
+
+        </visual>
+        <collision>
+            <origin
+                    xyz="0 0 0"
+                    rpy="0 0 0"/>
+            <geometry>
+                <box size="0.1 0.1 0.01"/>
+            </geometry>
+        </collision>
+    </link>
+
+
+</robot>

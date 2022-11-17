@@ -1,0 +1,9 @@
+download below sequences in the format [sync+rectified data] from the offcial website of KITTI dataset:
+2011_09_26_driver_0001 
+2011_09_26_driver_0059
+2011_09_26_driver_0093
+2011_09_26_driver_0095
+2011_09_26_driver_0104
+2011_09_26_driver_0106
+
+

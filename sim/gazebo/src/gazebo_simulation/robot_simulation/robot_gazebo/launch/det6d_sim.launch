@@ -1,0 +1,14 @@
+<launch>
+    <include file="$(find robot_gazebo)/launch/gazebo_world.launch">
+        <arg name="world_name" value="$(find robot_gazebo)/world/urban_road4.world"/>
+        <arg name="paused" value="true"/>
+        <arg name="verbose" value="true"/>
+    </include>
+
+    <include file="$(find robot_gazebo)/launch/gazebo_models.launch">
+        <arg name="group_ns" value="prius_ego"/>
+        <arg name="model" value="$(find robot_description)/urdf/prius_with_sensor.xacro"/>
+        <arg name="model_args" value="sensor:=true control_topic:=control"/>
+        <arg name="model_pose" value="-x 4.0 -y -40  -z 0 "/>
+    </include>
+</launch>
