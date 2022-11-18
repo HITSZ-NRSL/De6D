@@ -2,15 +2,33 @@
 
 [Junyuan Ouyang](https://github.com/OuyangJunyuan), [Haoyao Chen](https://github.com/HitszChen)
 
-[**[project page]**](https://hitsz-nrsl.github.io/De6D/) [**[arXiv]**](https://arxiv.org/abs/2207.09412) [**[video]**](https://youtu.be/VOQU78gdF9k)
+[**[project page]**](https://hitsz-nrsl.github.io/De6D/) [**[paper]**](https://ieeexplore.ieee.org/abstract/document/9939009) [**[video]**](https://youtu.be/VOQU78gdF9k)
 
 This repo is the official code release of ***Det6D***, the first full-degree-of-freedom 3D detector.
+
+## Citation
+
+If you find this project useful in your research, please consider citing:
+```bib
+@ARTICLE{ouyang2022det6d,
+  title={Det6D: A Ground-Aware Full-Pose 3-D Object Detector for Improving Terrain Robustness}, 
+  author={Ouyang, Junyuan and Chen, Haoyao},
+  journal={IEEE Transactions on Instrumentation and Measurement}, 
+  year={2022},
+  volume={71},
+  number={},
+  pages={1-9},
+  doi={10.1109/TIM.2022.3219469},
+  publisher={IEEE}
+}
+```
 
 ## News:
 * [2022/11/17]: release source codes.
 * [2022/10/26]: :boom: Det6D accepted by IEEE Transactions on Instrumentation and Measurement.
 * [2022/08/01]: Det6D is now on [arXiv](https://arxiv.org/abs/2207.09412), and code will be released after the paper is accepted. 
 * [2022/06/28]: Add project page.
+
 
 ## Introduction
 
@@ -55,15 +73,3 @@ GTA-V
 We thank the authors of [`OpenPCDet`](https://github.com/open-mmlab/OpenPCDet) for their open source release. Parts of our code base on the recent work [SASA](https://github.com/blakechen97/SASA).
 
 
-
-## Citation
-
-If you find this project useful in your research, please consider citing:
-```bib
-@article{ouyang2022det6d,
-  title={Det6D: A Ground-Aware Full-Pose 3D Object Detector for Improving Terrain Robustness},
-  author={Ouyang, Junyuan and Chen, Haoyao},
-  journal={arXiv preprint arXiv:2207.09412},
-  year={2022}
-}
-```
